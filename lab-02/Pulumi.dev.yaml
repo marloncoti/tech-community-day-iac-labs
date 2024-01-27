@@ -1,0 +1,5 @@
+config:
+  aws:region: us-east-1
+  lab-02:ami: amzn2-ami-hvm-*-x86_64-ebs
+  lab-02:instance_count: "1"
+  lab-02:instance_size: t2.micro
