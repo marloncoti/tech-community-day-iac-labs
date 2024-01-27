@@ -14,7 +14,6 @@ size = config.require('instance_size')
 instance_count = config.require_int('instance_count')
 instance_ami = config.require('ami')
 
-
 # Get the Latest AMI
 ami = aws.ec2.get_ami(
     most_recent=True,
