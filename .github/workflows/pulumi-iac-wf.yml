@@ -1,0 +1,56 @@
+
+name: pulumi-iac-wf
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'lab-02/**'
+
+
+jobs:
+  deploy-dev-stack:
+    name: deploy-infra
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Setup Python ✨
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.11
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+      
+      - name: Installing dependencies 📦️
+        working-directory: ./lab-02
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt          
+        
+      - name: Pulumi preview
+        uses: pulumi/actions@v4
+        with:
+          comment-on-pr: true
+          work-dir: ./lab-02
+          command: preview
+          stack-name: prd # When using an individual account, only use stack-name.
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+
+      - name: Deploy infrastructure 🚀
+        uses: pulumi/actions@v4
+        with:
+          work-dir: ./lab-02
+          command: up
+          stack-name: prd # When using an individual account, only use stack-name.
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
