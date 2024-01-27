@@ -52,6 +52,6 @@ jobs:
         with:
           work-dir: ./lab-02
           command: up
-          stack-name: prd # When using an individual account, only use stack-name.
+          stack-name: dev # When using an individual account, only use stack-name.
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
