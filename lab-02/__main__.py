@@ -22,6 +22,7 @@ ami = aws.ec2.get_ami(
     filters=[aws.ec2.GetAmiFilterArgs(name="name", values=[instance_ami])],
 )
 
+
 #Provision SG
 group = aws.ec2.SecurityGroup(
     f'{resource_prefix}-wb-sg',  #use a dynamic resource name based on the current project and stack
