@@ -9,6 +9,7 @@ project = pulumi.get_project()
 stack = pulumi.get_stack()
 resource_prefix = f'{project}-{stack}'
 
+
 # Get stack References
 size = config.require('instance_size')
 instance_count = config.require_int('instance_count')
